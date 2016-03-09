@@ -1,7 +1,7 @@
 package de.timfreiheit.plugin.buildtypelaunchericon
 
 /**
- * Configuration values for the victor {} script block.
+ * Configuration values for the buildTypeLauncherIcon {} script block.
  */
 class BuildTypeLauncherIconExtension {
 
