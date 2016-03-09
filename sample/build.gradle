@@ -4,7 +4,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'de.timfreiheit.buildtypelaunchericon:plugin:0.1.1'
+        classpath 'de.timfreiheit.buildtypelaunchericon:plugin:0.1'
     }
 }
 
@@ -39,6 +39,14 @@ android {
             initWith(buildTypes.debug)
         }
 
+        gamma {
+            initWith(buildTypes.debug)
+        }
+
+        gamma2 {
+            initWith(buildTypes.debug)
+        }
+
         release {
             debuggable false
             minifyEnabled false
@@ -70,8 +78,9 @@ android {
 
 
 buildTypeLauncherIcon {
-    mipmap true // default
-    ic_launcher "ic_launcher.png" // default
+    mipmap = true // default
+    ic_launcher = "ic_launcher.png" // default
+    buildTypeNameMapping = ['gamma2': 'gamma']
 }
 
 dependencies {
