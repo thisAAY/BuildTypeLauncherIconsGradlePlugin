@@ -1,0 +1,79 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'de.timfreiheit.buildtypelaunchericon:plugin:0.1.1'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+// Make sure to apply this plugin *after* the Android plugin
+apply plugin: 'de.timfreiheit.buildtypelaunchericon.plugin'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "de.timfreiheit.plugin.test"
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+
+        debug {
+            debuggable true
+        }
+
+        alpha {
+            initWith(buildTypes.debug)
+        }
+
+        beta {
+            initWith(buildTypes.debug)
+        }
+
+        release {
+            debuggable false
+            minifyEnabled false
+        }
+    }
+
+    flavorDimensions "api", "tools"
+    productFlavors {
+
+        v16 {
+            dimension "api"
+            minSdkVersion 16
+        }
+
+        v21 {
+            dimension "api"
+            minSdkVersion 21
+        }
+
+        internal {
+            dimension "tools"
+        }
+
+        production {
+            dimension "tools"
+        }
+    }
+}
+
+
+buildTypeLauncherIcon {
+    mipmap true // default
+    ic_launcher "ic_launcher.png" // default
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:22.2.0'
+}
