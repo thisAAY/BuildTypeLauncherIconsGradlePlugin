@@ -7,6 +7,8 @@ import org.gradle.api.file.FileCollection
 
 class BuildTypeLauncherIconsPlugin implements Plugin<Project> {
 
+    final List<String> supportedBuildTypes = ['debug', 'alpha', 'beta', 'gamma']
+
     void apply(Project project) {
         project.extensions.create('buildTypeLauncherIcon', BuildTypeLauncherIconExtension)
 
@@ -30,7 +32,12 @@ class BuildTypeLauncherIconsPlugin implements Plugin<Project> {
                     buildTypeName = config.buildTypeNameMapping.get(buildTypeName)
                 }
 
-                if (!config.runOnBuildTypes.contains(variant.buildType.name)) {
+                // check if buildType or mapping is supported
+                if (!supportedBuildTypes.contains(buildTypeName)) {
+                    return;
+                }
+
+                if (!config.runOnBuildTypes.contains(buildTypeName)) {
                     return;
                 }
 
