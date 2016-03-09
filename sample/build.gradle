@@ -2,9 +2,11 @@ buildscript {
     repositories {
         jcenter()
         mavenLocal()
+        maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'de.timfreiheit.buildtypelaunchericon:plugin:0.1'
+        //classpath 'de.timfreiheit.buildtypelaunchericon:plugin:0.1'
+        classpath 'com.github.timfreiheit:BuildTypeLauncherIconsGradlePlugin:0.1'
     }
 }
 
