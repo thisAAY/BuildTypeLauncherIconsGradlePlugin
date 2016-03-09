@@ -52,3 +52,13 @@ buildTypeLauncherIcon {
 }
 
 ```
+
+The launcher icon must have the following dimensions depending on the density
+
+| Density     | Dimensions  |
+| --------|---------|
+| ldpi  | 36 * 36   |
+| mdpi | 48 * 48 |
+| hdpi | 72 * 72 |
+| xhdpi | 96 * 96 |
+| xxhdpi | 144 * 144 |
