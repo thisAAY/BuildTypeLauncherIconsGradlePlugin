@@ -75,7 +75,7 @@ class BuildTypeLauncherIconsPlugin implements Plugin<Project> {
                 // add dummy folder because the folder is already added to an sourceSet
                 // when using the folder defined in the argument the generated resources are at the lowest priority
                 // and will cause an conflict with the existing once
-                variant.registerResGeneratingTask(task, new File(task.outputDir, "_dummy"))
+                variant.registerResGeneratingTask(task, new File(outputDirectory, "_dummy"))
             }
         }
 
