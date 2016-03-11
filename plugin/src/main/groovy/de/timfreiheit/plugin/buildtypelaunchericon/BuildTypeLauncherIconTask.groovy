@@ -40,8 +40,8 @@ class BuildTypeLauncherIconTask extends DefaultTask {
 
         //println("generateDrawableAction")
         //println(sources.files.toString())
-        sources.forEach {
 
+        for (File it : sources) {
             def parent = it.toPath().parent.toFile()
 
             def outputParentDir = new File(outputDir, parent.name);
