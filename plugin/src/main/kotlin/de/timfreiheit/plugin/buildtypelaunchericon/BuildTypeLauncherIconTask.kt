@@ -15,35 +15,36 @@ import java.io.File
  */
 open class BuildTypeLauncherIconTask : DefaultTask() {
 
-    @InputFiles
+    @get:InputFiles
     lateinit var sources: FileCollection;
 
-    @Input
+    @get:Input
     var isMipmap: Boolean = true;
 
-    @Input
+    @get:Input
     lateinit var launcherName: String;
 
-    @Input
+    @get:Input
     lateinit var buildType: String;
 
     /**
      * The output directory.
      */
-    @OutputDirectory
+    @get:OutputDirectory
     lateinit var outputDir: File
 
     @TaskAction
-    fun generateDrawables(inputs: IncrementalTaskInputs) {
+    fun execute(inputs: IncrementalTaskInputs) {
+
         for (it in sources) {
-            var parent = it.toPath().parent.toFile()
+
+            var parent = it.parentFile
 
             var outputParentDir = File(outputDir, parent.name);
 
             var density = Density.getFromFolderName(outputParentDir.name)
 
             var output = File(outputParentDir, launcherName)
-            // println(output.toString())
             try {
                 outputParentDir.mkdirs()
                 output.createNewFile()

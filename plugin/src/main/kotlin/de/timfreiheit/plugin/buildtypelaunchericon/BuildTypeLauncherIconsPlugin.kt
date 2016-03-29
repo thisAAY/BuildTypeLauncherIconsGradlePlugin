@@ -4,11 +4,11 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
+import com.android.build.gradle.api.AndroidSourceSet
 import com.android.build.gradle.api.BaseVariant
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.Task
 import org.gradle.api.file.FileCollection
 import java.io.File
 import java.util.*
@@ -53,13 +53,7 @@ class BuildTypeLauncherIconsPlugin : Plugin<Project> {
                 return@forEach;
             }
 
-            val outputDirectory = project.file("$project.buildDir/generated/res/${variant.flavorName}/${variant.buildType.name}/launcher_icons/")
-
-            // add new resource folder to sourceSet with the highest priority
-            // this makes sure the new icons will override the original one
-            variant.sourceSets[variant.sourceSets.size - 1].resDirectories.add(outputDirectory)
-
-            var files : FileCollection? = null;
+            var files: FileCollection? = project.files();
             variant.sourceSets.forEach { sourceSet ->
                 val icons = ArrayList<File>();
                 for (f in sourceSet.resDirectories) {
@@ -67,6 +61,16 @@ class BuildTypeLauncherIconsPlugin : Plugin<Project> {
                 }
                 val iconCollection = project.files(icons);
                 files = files?.plus(iconCollection) ?: iconCollection
+            }
+
+            val outputDirectory = getOutputDirForVariant(project, variant)
+            // add new resource folder to sourceSet with the highest priority
+            // this makes sure the new icons will override the original one
+            val sourceProvider = variant.sourceSets[variant.sourceSets.size - 1]
+            if (sourceProvider is AndroidSourceSet) {
+                sourceProvider.res.srcDir(outputDirectory)
+            } else {
+                throw IllegalStateException("sourceProvider is not an AndroidSourceSet")
             }
 
             if (files?.isEmpty ?: true) {
@@ -90,6 +94,11 @@ class BuildTypeLauncherIconsPlugin : Plugin<Project> {
             // and will cause an conflict with the existing once
             variant.registerResGeneratingTask(task, File(outputDirectory, "_dummy"))
         }
+
+    }
+
+    private fun getOutputDirForVariant(project: Project, variant: BaseVariant): File {
+        return project.file("${project.buildDir}/generated/res/launcher_icons/${variant.flavorName}/${variant.buildType.name}/")
     }
 
     fun searchIcons(temp: MutableList<File>, dir: File) {
