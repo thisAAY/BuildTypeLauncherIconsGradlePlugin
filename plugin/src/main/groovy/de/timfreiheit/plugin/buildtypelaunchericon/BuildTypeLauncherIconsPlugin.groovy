@@ -66,6 +66,7 @@ class BuildTypeLauncherIconsPlugin implements Plugin<Project> {
                 Task task = project.task("prepareLauncherIconsFor${variant.name.capitalize()}", type: BuildTypeLauncherIconTask) {
                     sources = files
                     outputDir = outputDirectory
+                    isMipmap = true
                     launcherName = config.ic_launcher
                     buildType = buildTypeName
                 }
