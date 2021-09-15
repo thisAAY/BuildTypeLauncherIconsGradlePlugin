@@ -23,9 +23,6 @@ class BuildTypeLauncherIconTask extends DefaultTask {
     String launcherName;
 
     @Input
-    boolean isMipmap
-
-    @Input
     String buildType
 
     /**
