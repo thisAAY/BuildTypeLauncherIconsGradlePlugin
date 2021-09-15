@@ -1,18 +1,15 @@
 plugins {
-    id 'nu.studer.plugindev' version '1.0.3'
-
-    // Should come along with plugindev, but plugindev uses an old version
-    id 'com.jfrog.bintray' version '1.2'
+    id "nu.studer.plugindev" version "4.1"
 }
 
 apply plugin: 'groovy'
 
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
+    implementation gradleApi()
+    implementation localGroovy()
 }
 
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 repositories {
     mavenCentral()
@@ -21,8 +18,8 @@ repositories {
 // Batik dependencies
 
 dependencies {
-    compile gradleApi()
-    testCompile 'junit:junit:4.11'
+    implementation gradleApi()
+    api 'junit:junit:4.11'
 }
 
 // Plugin publishing
@@ -30,20 +27,7 @@ dependencies {
 group = 'de.timfreiheit.buildtypelaunchericon'
 version = '0.1'
 
-plugindev {
-    pluginId 'de.timfreiheit.buildtypelaunchericon.plugin'
-    pluginName 'buildtypelaunchericon'
-    pluginImplementationClass 'de.timfreiheit.plugin.buildtypelaunchericon.BuildTypeLauncherIconsPlugin'
-    pluginDescription 'Gradle plugin that generate launcher icons for different build type'
-    pluginLicenses 'MIT'
-    pluginTags 'gradle', 'plugin', 'android'
-    authorId 'timfreiheit'
-    authorName 'Tim Freiheit'
-    authorEmail 'freiheit.tim@gmail.com'
-    projectUrl 'https://github.com/timfreiheit'
-    projectInceptionYear '2016'
-    done() // do not omit this
-}
+
 
 // If you want to upload this, make sure to set BINTRAY_USER and BINTRAY_API_KEY in gradle.properties
 if (project.hasProperty('BINTRAY_USER') && project.hasProperty('BINTRAY_API_KEY')) {
